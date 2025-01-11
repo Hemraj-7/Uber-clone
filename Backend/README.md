@@ -1,6 +1,6 @@
 # Backend API Documentation
 
-## For Users ->
+## Documentation For Users ----->
 ## `/users/register` Endpoint
 
 ### Description
@@ -91,7 +91,7 @@ Logout the current user and blacklist the token provided in cookie or headers
 
 Requires a valid JWT token in the Authorization header or cookie.
 
-## For Captains ->
+## Documentation For Captains ----->
 ## `/captains/register` Endpoint
 
 ### Description
@@ -128,3 +128,71 @@ The request body should be in JSON format and include the following fields:
         - `capacity` (number, required): Vehicle passenger capacity
         - `vehicleType` (string, required): vehicle type
 - `token` (string): JWT Token
+
+## `/captains/login` Endpoint
+
+### Description
+
+Authenticates a Captain using their email and password, returning a JWT token upon success
+
+### HTTP Method
+`POST`
+
+### Request Body
+
+The request body should be in JSON format and include the following fields: 
+- `email` (string, required): Captain's email address (must be a valid email).
+- `password` (string, required): Captain's password (minimum 6 characters). 
+
+### Example Response
+- `captain` (object):
+    - `fullname` (object):
+        - `firstname` (string): User's first name
+        - `lastname` (string): User's last name
+    - `email` (string): User's email address
+    - `password` (string): User's password
+    - `vehicle` (object):
+        - `color` (string, required): Vehicle color 
+        - `plate` (string, required): Vehicle number plate
+        - `capacity` (number, required): Vehicle passenger capacity
+        - `vehicleType` (string, required): vehicle type
+- `token` (string): JWT Token
+
+## `/captains/profile` Endpoint
+
+### Description
+
+Retrieves the profile information of the currently authenticated captain.
+
+### HTTP Method
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization: Bearer <token>`
+
+### Example Response
+- `captain` (object):
+    - `fullname` (object):
+        - `firstname` (string): User's first name
+        - `lastname` (string): User's last name
+    - `email` (string): User's email address
+    - `vehicle` (object):
+        - `color` (string, required): Vehicle color 
+        - `plate` (string, required): Vehicle number plate
+        - `capacity` (number, required): Vehicle passenger capacity
+        - `vehicleType` (string, required): vehicle type
+
+## `/captains/logout` Endpoint
+
+### Description
+
+Logout the current captain and blacklist the token provided in cookie or headers
+
+### HTTP Method
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header or cookie.
