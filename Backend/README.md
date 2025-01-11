@@ -1,6 +1,6 @@
 # Backend API Documentation
 
-## Documentation For Users ----->
+# Documentation For Users ----->
 ## `/users/register` Endpoint
 
 ### Description
@@ -91,7 +91,7 @@ Logout the current user and blacklist the token provided in cookie or headers
 
 Requires a valid JWT token in the Authorization header or cookie.
 
-## Documentation For Captains ----->
+# Documentation For Captains ----->
 ## `/captains/register` Endpoint
 
 ### Description
