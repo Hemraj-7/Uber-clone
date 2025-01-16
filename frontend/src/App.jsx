@@ -5,7 +5,6 @@ import UserLogin from './pages/UserLogin'
 import UserSignup from './pages/UserSignup'
 import CaptainSignup from './pages/CaptainSignup'
 import CaptainLogin from './pages/CaptainLogin'
-import UserContext, { UserDataContext } from './context/userContext'
 import Home from './pages/Home'
 import UserProtectWrapper from './pages/UserProtectWrapper'
 import UserLogout from './pages/UserLogout'
@@ -14,8 +13,6 @@ import CaptainProtectWrapper from './pages/CaptainProtectWrapper'
 import CaptainLogout from './pages/CaptainLogout'
 
 const App = () => {
-  const ans = UserContext(UserDataContext);
-  console.log(ans)
   return (
     <div>
       <Routes>
