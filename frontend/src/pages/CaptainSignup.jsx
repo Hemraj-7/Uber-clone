@@ -168,7 +168,7 @@ const CaptainSignup = () => {
           <p className='text-center mb-20'>Already have a Captain account? <Link to='/captain-login' className='text-blue-600'>Login here</Link></p>
         </div>
         <div>
-          <p className='text-[10px] leading-tight'>
+          <p className='text-[10px] leading-tight mb-2'>
             This site is protected by reCAPTCHA and the <span className='underline'>Google Policy</span> and <span className='underline'>Terms and Service apply</span>
           </p>
         </div>
