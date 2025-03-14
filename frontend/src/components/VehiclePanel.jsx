@@ -1,6 +1,6 @@
 import React from 'react'
 
-const VehiclePanel = (props) => {
+const VehiclePanel = (props) => {    
     return (
         <div>
             <h5 onClick={() => { props.setVehiclePanelOpen(false) }} className=' absolute top-8 right-6'>
@@ -11,6 +11,7 @@ const VehiclePanel = (props) => {
                 onClick={() => {
                     props.setConfirmRidePanelOpen(true)
                     props.setVehiclePanelOpen(false)
+                    props.selectVehicle('car')
                 }}
                 className='flex items-center gap-2 w-full p-3 border-2 active:border-black rounded-xl mb-2'>
                 <img className='h-12' src="https://tse4.mm.bing.net/th?id=OIP.ymjpxr4RPlwbLenCbbpYywHaE7&pid=Api&P=0&h=180" alt="" />
@@ -19,12 +20,13 @@ const VehiclePanel = (props) => {
                     <h5 className='font-medium text-sm'>2 mins away</h5>
                     <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
                 </div>
-                <h2 className='text-lg font-semibold w-1/4 text-right'>₹193.20</h2>
+                <h2 className='text-lg font-semibold w-1/4 text-right'>₹{props.setFare.car}</h2>
             </div>
             <div
                 onClick={() => {
                     props.setConfirmRidePanelOpen(true)
                     props.setVehiclePanelOpen(false)
+                    props.selectVehicle('motorcycle')
                 }}
                 className='flex items-center gap-2 w-full p-3 border-2 active:border-black rounded-xl mb-2'>
                 <img className='h-12' src="https://tse4.mm.bing.net/th?id=OIP.znY96OhfmQ9RecEw45FS_AHaE7&pid=Api&P=0&h=180" alt="" />
@@ -33,12 +35,13 @@ const VehiclePanel = (props) => {
                     <h5 className='font-medium text-sm'>3 mins away</h5>
                     <p className='font-normal text-xs text-gray-600'>Affordable, motorcycle rides</p>
                 </div>
-                <h2 className='text-lg font-semibold w-1/4 text-right'>₹65.30</h2>
+                <h2 className='text-lg font-semibold w-1/4 text-right'>₹{props.setFare.motorcycle}</h2>
             </div>
             <div
                 onClick={() => {
                     props.setConfirmRidePanelOpen(true)
                     props.setVehiclePanelOpen(false)
+                    props.selectVehicle('auto')
                 }}
                 className='flex items-center gap-2 w-full p-3 border-2 active:border-black rounded-xl mb-2'>
                 <img className='h-12' src="https://tse4.mm.bing.net/th?id=OIP.gERohywpalGF3NjolmHt5wHaE7&pid=Api&P=0&h=180" alt="" />
@@ -47,7 +50,7 @@ const VehiclePanel = (props) => {
                     <h5 className='font-medium text-sm'>4 mins away</h5>
                     <p className='font-normal text-xs text-gray-600'>Affordable, auto rides</p>
                 </div>
-                <h2 className='text-lg font-semibold w-1/4 text-right'>₹118.86</h2>
+                <h2 className='text-lg font-semibold w-1/4 text-right'>₹{props.setFare.auto}</h2>
             </div>
         </div>
     )

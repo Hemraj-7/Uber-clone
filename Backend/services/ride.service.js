@@ -1,3 +1,4 @@
+const { log } = require('console');
 const rideModel = require('../models/ride.model');
 const mapService = require('./maps.service');
 const crypto = require('crypto');
@@ -9,6 +10,10 @@ async function getFare(pickup, destination) {
 
     const pickupPoint = await mapService.getCoordinates(pickup);
     const destinationPoint = await mapService.getCoordinates(destination);
+
+    console.log("Pickup Coordinates:", pickupPoint);
+    console.log("Destination Coordinates:", destinationPoint);
+
 
     const distanceTime = await mapService.getDistanceTime(pickupPoint, destinationPoint);
 
@@ -31,15 +36,15 @@ async function getFare(pickup, destination) {
     };
 
     const fare = {
-        auto: baseFare.auto + (distanceTime.distance * perKmRate.auto) + (distanceTime.duration * perMinuteRate.auto),
-        car: baseFare.car + (distanceTime.distance * perKmRate.car) + (distanceTime.duration * perMinuteRate.car),
-        motorcycle: baseFare.motorcycle + (distanceTime.distance * perKmRate.motorcycle) + (distanceTime.duration * perMinuteRate.motorcycle),
+        auto: Math.round(baseFare.auto + (distanceTime.distance * perKmRate.auto) + (distanceTime.duration * perMinuteRate.auto)),
+        car: Math.round(baseFare.car + (distanceTime.distance * perKmRate.car) + (distanceTime.duration * perMinuteRate.car)),
+        motorcycle: Math.round(baseFare.motorcycle + (distanceTime.distance * perKmRate.motorcycle) + (distanceTime.duration * perMinuteRate.motorcycle)),
     };
-
-    console.log(fare)
 
     return fare;
 }
+
+module.exports.getFare = getFare;
 
 function getOtp(num) {
     function generateOtp(num) {

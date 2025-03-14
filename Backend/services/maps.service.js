@@ -54,6 +54,8 @@ module.exports.getDistanceTime = async (originCoords, destinationCoords) => {
 
     const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${originLng},${originLat};${destinationLng},${destinationLat}?geometries=geojson&access_token=${apiKey}`;
 
+    // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
+
     try {
         const response = await axios.get(url);
         if (response.data.routes.length > 0) {
