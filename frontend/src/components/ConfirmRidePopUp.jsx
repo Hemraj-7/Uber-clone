@@ -1,12 +1,30 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const ConfirmRidePopUp = (props) => {
 
-    const [OTP, setOTP] = useState('')
+    const [otp, setOtp] = useState('')
+    const navigate = useNavigate()
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
+
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+            params: {
+                rideId: props.ride._id,
+                otp: otp
+            },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        if (response.status === 200) {
+            props.setConfirmRidePopUpPanel(false)
+            props.setRidePopUpPanel(false)
+            navigate('/captain-riding', { state: { ride: props.ride } })
+        }
     }
 
     return (
@@ -20,7 +38,7 @@ const ConfirmRidePopUp = (props) => {
             <div className='flex justify-between items-center p-3 bg-yellow-400 rounded-lg'>
                 <div className='flex items-center gap-2'>
                     <img className='h-12 w-12 rounded-full object-cover' src="https://www.stylecraze.com/wp-content/uploads/2013/10/Most-Beautiful-Indian-Girls_1200px.jpg.webp" alt="" />
-                    <h2 className='text-lg font-medium'>Harshita Barfa</h2>
+                    <h2 className='text-lg font-medium'>{props.ride?.user.fullname.firstname}</h2>
                 </div>
                 <h5 className='text-lg font-semibold'>2.2 KM</h5>
             </div>
@@ -32,7 +50,7 @@ const ConfirmRidePopUp = (props) => {
                         </div>
                         <div>
                             <h3 className='text-lg font-medium'>561/11-A</h3>
-                            <p className='text-sm text-gray-600'>Kankariya Talab, Hyderabad</p>
+                            <p className='text-sm text-gray-600'>{props.ride?.pickup}</p>
                         </div>
                     </div>
                     <div className='flex items-center gap-5 px-2 py-3 border-b-2'>
@@ -41,7 +59,7 @@ const ConfirmRidePopUp = (props) => {
                         </div>
                         <div>
                             <h3 className='text-lg font-medium'>569/97-C</h3>
-                            <p className='text-sm text-gray-600'>Jalebi House, Juna Bazar, Hyderabad</p>
+                            <p className='text-sm text-gray-600'>{props.ride?.destination}</p>
                         </div>
                     </div>
                     <div className='flex items-center gap-5 px-2 py-3'>
@@ -49,32 +67,28 @@ const ConfirmRidePopUp = (props) => {
                             <i className="text-lg ri-money-rupee-circle-fill"></i>
                         </div>
                         <div>
-                            <h3 className='text-lg font-medium'>₹193.20</h3>
+                            <h3 className='text-lg font-medium'>₹{props.ride?.fare}</h3>
                             <p className='text-sm text-gray-600'>Cash Cash</p>
                         </div>
                     </div>
                 </div>
                 <div>
                     <form className='w-screen p-3 flex flex-col gap-5'
-                        onSubmit={(e) => {
-                            submitHandler(e)
-                        }}>
+                        onSubmit={submitHandler}>
                         <input
-                            value={OTP}
+                            value={otp}
                             onChange={(e) => {
-                                setOTP(e.target.value)
+                                setOtp(e.target.value)
                             }}
                             type="number"
                             placeholder='Enter OTP'
                             className='bg-[#eeeeee] font-mono px-6 py-3 text-lg rounded-lg w-full' />
-                        <div className=' flex justify-between items-center'>
-                            <button onClick={() => {
-                                props.setConfirmRidePopUpPanel(false)
-                            }} className='p-2 px-12 bg-red-500 text-white font-semibold rounded-lg text-lg'>Cancel</button>
-                            <Link
-                                to={'/captain-riding'}
-                                className='p-2 px-12 bg-green-600 text-white font-semibold rounded-lg text-lg'>Confirm</Link>
-                        </div>
+                        <button className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button>
+                        <button onClick={() => {
+                            props.setConfirmRidePopupPanel(false)
+                            props.setRidePopUpPanel(false)
+
+                        }} className='w-full mt-2 bg-red-600 text-lg text-white font-semibold p-3 rounded-lg'>Cancel</button>
                     </form>
                 </div>
             </div>

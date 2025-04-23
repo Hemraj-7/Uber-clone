@@ -3,11 +3,15 @@ import gsap from 'gsap'
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FinishRide from '../components/FinishRide'
+import { useLocation } from 'react-router-dom'
 
 const CaptainRiding = () => {
 
   const [finishRidePanel, setFinishRidePanel] = useState(false)
   const finishRidePanelRef = useRef(null)
+
+  const location = useLocation()
+  const rideData = location.state?.ride
 
   useGSAP(function () {
     if (finishRidePanel) {
@@ -42,12 +46,16 @@ const CaptainRiding = () => {
         <div className='p-6 flex items-center justify-between pt-12'>
           <h4 className='text-xl font-semibold'>4 Km away</h4>
           <button onClick={() => {
-          setFinishRidePanel(true)
-        }} className='p-2 bg-green-600 text-white font-semibold rounded-lg px-10'>Complate Ride</button>
+            setFinishRidePanel(true)
+          }} className='p-2 bg-green-600 text-white font-semibold rounded-lg px-10'>Complate Ride</button>
         </div>
       </div>
       <div ref={finishRidePanelRef} className='fixed z-10 bottom-0 translate-y-full bg-white w-full px-3 py-8'>
-        <FinishRide setFinishRidePanel={setFinishRidePanel} />
+        <FinishRide
+          ride={rideData}
+          setFinishRidePanel={setFinishRidePanel}
+          
+        />
       </div>
     </div>
   )

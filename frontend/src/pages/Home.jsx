@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import 'remixicon/fonts/remixicon.css'
@@ -8,6 +8,9 @@ import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
 import axios from 'axios'
+import { SocketContext } from '../context/SocketContext';
+import { UserDataContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -26,7 +29,7 @@ const Home = () => {
   const [vehicleFound, setVehicleFound] = useState(false)
 
   const waitingForDriverRef = useRef(null)
-  const [waitingForDeriver, setWaitingForDeriver] = useState(true)
+  const [waitingForDriver, setWaitingForDriver] = useState(false)
 
   const [pickupSuggestions, setPickupSuggestions] = useState([])
   const [destinationSuggestions, setDestinationSuggestions] = useState([])
@@ -36,6 +39,34 @@ const Home = () => {
 
   const [vehicleType, setVehicleType] = useState(null)
 
+  const [ride, setRide] = useState(null)
+
+  const navigate = useNavigate()
+
+  const { socket } = useContext(SocketContext)
+  const { user } = useContext(UserDataContext)
+
+  useEffect(() => {
+    if (socket && user?._id) {
+      socket.emit('join', {
+        userType: "user",
+        userId: user._id
+      });
+    }
+  }, [socket, user?._id]);
+
+
+  socket.on('ride-confirmed', ride => {
+    console.log(ride)
+    setVehicleFound(false)
+    setWaitingForDriver(true)
+    setRide(ride)
+  })
+
+  socket.on('ride-started', ride => {
+    setWaitingForDriver(false)
+    navigate('/riding', { state: { ride } })
+  })
 
   const handlepickupChange = async (e) => {
     setPickup(e.target.value)
@@ -142,7 +173,7 @@ const Home = () => {
   }, [vehicleFound])
 
   useGSAP(function () {
-    if (waitingForDeriver) {
+    if (waitingForDriver) {
       gsap.to(waitingForDriverRef.current, {
         transform: 'translateY(0)'
       })
@@ -152,7 +183,7 @@ const Home = () => {
         transform: 'translateY(100%)'
       })
     }
-  }, [waitingForDeriver])
+  }, [waitingForDriver])
 
   async function findTrip() {
     setVehiclePanelOpen(true)
@@ -281,7 +312,11 @@ const Home = () => {
         />
       </div>
       <div ref={waitingForDriverRef} className='fixed z-10 bottom-0 bg-white w-full px-3 py-8'>
-        <WaitingForDriver setWaitingForDeriver={setWaitingForDeriver} />
+        <WaitingForDriver
+          ride={ride}
+          setVehicleFound={setVehicleFound}
+          setWaitingForDriver={setWaitingForDriver}
+        />
       </div>
     </div>
   )

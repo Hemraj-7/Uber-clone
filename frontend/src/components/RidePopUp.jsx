@@ -12,7 +12,7 @@ const RidePopUp = (props) => {
       <div className='flex justify-between items-center p-3 bg-yellow-400 rounded-lg'>
         <div className='flex items-center gap-2'>
           <img className='h-12 w-12 rounded-full object-cover' src="https://www.stylecraze.com/wp-content/uploads/2013/10/Most-Beautiful-Indian-Girls_1200px.jpg.webp" alt="" />
-          <h2 className='text-lg font-medium'>Harshita Barfa</h2>
+          <h2 className='text-lg font-medium'>{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname}</h2>
         </div>
         <h5 className='text-lg font-semibold'>2.2 KM</h5>
       </div>
@@ -24,7 +24,7 @@ const RidePopUp = (props) => {
             </div>
             <div>
               <h3 className='text-lg font-medium'>561/11-A</h3>
-              <p className='text-sm text-gray-600'>Kankariya Talab, Hyderabad</p>
+              <p className='text-sm text-gray-600'>{props.ride?.pickup}</p>
             </div>
           </div>
           <div className='flex items-center gap-5 px-2 py-3 border-b-2'>
@@ -33,7 +33,7 @@ const RidePopUp = (props) => {
             </div>
             <div>
               <h3 className='text-lg font-medium'>569/97-C</h3>
-              <p className='text-sm text-gray-600'>Jalebi House, Juna Bazar, Hyderabad</p>
+              <p className='text-sm text-gray-600'>{props.ride?.destination}</p>
             </div>
           </div>
           <div className='flex items-center gap-5 px-2 py-3'>
@@ -41,19 +41,20 @@ const RidePopUp = (props) => {
               <i className="text-lg ri-money-rupee-circle-fill"></i>
             </div>
             <div>
-              <h3 className='text-lg font-medium'>₹193.20</h3>
+              <h3 className='text-lg font-medium'>₹{props.ride?.fare}</h3>
               <p className='text-sm text-gray-600'>Cash Cash</p>
             </div>
           </div>
         </div>
         <div className='px-2 w-full flex items-center justify-between'>
-        <button onClick={() => {
-          props.setRidePopUpPanel(false)
-        }} className='p-2 bg-gray-300 text-gray-700 font-semibold rounded-lg px-10'>Ignore</button>
-        <button onClick={() => {
-          props.setRidePopUpPanel(false)
-          props.setConfirmRidePopUpPanel(true)
-        }} className='p-2 bg-green-600 text-white font-semibold rounded-lg px-10'>Accept</button>
+          <button onClick={() => {
+            props.setRidePopUpPanel(false)
+          }} className='p-2 bg-gray-300 text-gray-700 font-semibold rounded-lg px-10'>Ignore</button>
+          <button onClick={() => {
+            props.setRidePopUpPanel(false)
+            props.setConfirmRidePopUpPanel(true)
+            props.confirmRide()
+          }} className='p-2 bg-green-600 text-white font-semibold rounded-lg px-10'>Accept</button>
         </div>
       </div>
     </div>
