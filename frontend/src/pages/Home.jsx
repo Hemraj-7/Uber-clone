@@ -11,6 +11,7 @@ import axios from 'axios'
 import { SocketContext } from '../context/SocketContext';
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import LiveTracking from '../components/LiveTracking';
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -214,12 +215,13 @@ const Home = () => {
 
   return (
     <div className='h-screen relative overflow-hidden'>
-      <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Logo Piture" />
+      <img className='w-16 z-10 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Logo Piture" />
       <div onClick={() => {
         setVehiclePanelOpen(false)
       }} className='w-screen h-screen'>
         {/* temparary image */}
-        <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />
+        {/* <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" /> */}
+        <LiveTracking />
       </div>
       <div className='absolute flex flex-col justify-end h-screen top-0 w-full'>
         <div className='bg-white h-[37%] p-6 rounded-t-xl relative'>

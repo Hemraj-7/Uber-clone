@@ -9,6 +9,7 @@ import { useEffect, useContext } from 'react'
 import { SocketContext } from '../context/SocketContext'
 import { CaptainDataContext } from '../context/CaptainContext'
 import axios from 'axios'
+import LiveTracking from '../components/LiveTracking'
 
 const CaptainHome = () => {
 
@@ -117,14 +118,15 @@ const CaptainHome = () => {
 
   return (
     <div className='h-screen'>
-      <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
+      <div className='fixed p-6 top-0 flex items-center justify-between w-screen z-10'>
         <img className='w-16' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
         <Link to={'/home'} className='h-10 w-10 rounded-full bg-white flex items-center justify-center'>
           <i className="text-lg font-medium ri-logout-box-r-line"></i>
         </Link>
       </div>
-      <div className='h-3/5'>
-        <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />
+      <div className='h-3/5 overflow-hidden'>
+        {/* <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" /> */}
+        <LiveTracking />
       </div>
       <div className='h-2/5 p-6'>
         <CaptainDetails />

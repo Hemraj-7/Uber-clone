@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FinishRide from '../components/FinishRide'
 import { useLocation } from 'react-router-dom'
+import LiveTracking from '../components/LiveTracking'
 
 const CaptainRiding = () => {
 
@@ -35,7 +36,8 @@ const CaptainRiding = () => {
         </Link>
       </div>
       <div className='h-4/5'>
-        <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" />
+        {/* <img className='w-full h-full object-cover' src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif" alt="" /> */}
+        <LiveTracking />
       </div>
       <div className='h-1/5 bg-yellow-400  relative'>
         <h5 onClick={() => {
